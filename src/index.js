@@ -209,8 +209,12 @@ class MaskedInput extends React.Component {
 
     e.preventDefault()
     this._updateMaskSelection()
+
     // getData value needed for IE also works in FF & Chrome
-    if (this.mask.paste(e.clipboardData.getData('Text'))) {
+    let pastedValue = e.clipboardData.getData('Text')
+    let formattedPastedValue = pastedValue.replace(/\W/g, '')
+
+    if (this.mask.paste(formattedPastedValue)) {
       e.target.value = this.mask.getValue()
       // Timeout needed for IE
       setTimeout(() => this._updateInputSelection(), 0)
